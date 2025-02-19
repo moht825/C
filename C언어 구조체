@@ -1,0 +1,13 @@
+struct book
+{
+  char title[30];
+  char author[30];
+  int price;
+};
+이런식으로 구조체를 정의할 수 있다.
+struct <-키워드
+book <-구조체 이름
+char title[30];
+char author[30];
+int price;
+이렇게 3개가 구조체의 멤버 변수이다.
