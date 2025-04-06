@@ -1,0 +1,145 @@
+예시 코드)
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <time.h> 
+#define HASHLEN 4 
+#define ARRAYLEN 10 
+typedef struct HashTable 
+{ 
+int* data; 
+int num; 
+}HashTable; 
+int Hash(int num) 
+{ 
+} 
+return num % 4; 
+int* CreateArray(int num) 
+{ 
+} 
+int* newArray = (int*)malloc(sizeof(int)); 
+newArray[0] = num; 
+return newArray; 
+int* ReallocArray(int* array, int len, int num) 
+{ 
+} 
+int* newArray = (int*)malloc(sizeof(int) * (len + 1)); 
+for (int cnt = 0; cnt < len; cnt++) 
+newArray[cnt] = array[cnt]; 
+newArray[len] = num; 
+free(array); 
+return newArray; 
+void SaveAtHashTable(HashTable* hashTable, int num) 
+{ 
+int key = Hash(num); 
+if (hashTable[key].data == NULL) 
+{ 
+} 
+else 
+{ 
+hashTable[key].data = CreateArray(num); 
+hashTable[key].data = ReallocArray(hashTable[key].data, 
+hashTable[key].num, num); 
+} 
+hashTable[key].num++; 
+} 
+int main(void) 
+{ 
+srand((unsigned)time(NULL)); 
+int array[ARRAYLEN]; 
+for (int cnt = 0; cnt < ARRAYLEN; cnt++) 
+{ 
+} 
+array[cnt] = rand() % 100; 
+printf("%d, ", array[cnt]); 
+HashTable* hashTable = (HashTable*)malloc(sizeof(HashTable) * HASHLEN); 
+for (int cnt = 0; cnt < HASHLEN; cnt++) 
+{ 
+} 
+hashTable[cnt].data = NULL; 
+hashTable[cnt].num = 0; 
+for (int cnt = 0; cnt < ARRAYLEN; cnt++) 
+{ 
+SaveAtHashTable(hashTable, array[cnt]); 
+} 
+printf("\n"); 
+for (int cnt = 0; cnt < HASHLEN; cnt++) 
+{ 
+} 
+} 
+printf("hashTable[%d] : ", cnt); 
+for (int cnt2 = 0; cnt2 < hashTable[cnt].num; cnt2++) 
+printf("%d, ", hashTable[cnt].data[cnt2]); 
+printf("\n"); 
+
+
+해결코드) 
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <time.h>
+ #define HASHLEN 4
+ #define ARRAYLEN 10
+ typedef struct HashTable {
+    int* data;
+    int num;
+ } HashTable;
+ int Hash(int num) {
+    return num % HASHLEN;
+ }
+ int* CreateArray(int num) {
+    int* newArray = (int*)malloc(sizeof(int));
+    newArray[0] = num;
+    return newArray;
+ }
+ int* ReallocArray(int* array, int len, int num) {
+    int* newArray = (int*)malloc(sizeof(int) * (len + 1));
+    for (int i = 0; i < len; i++) {
+        newArray[i] = array[i];
+    }
+    newArray[len] = num;
+    free(array);
+    return newArray;
+ }
+ void SaveAtHashTable(HashTable* hashTable, int num) {
+    int key = Hash(num);
+    if (hashTable[key].data == NULL) {
+        hashTable[key].data = CreateArray(num);
+    } else {
+        hashTable[key].data = ReallocArray(hashTable[key].data, hashTable[key].num, 
+num);
+    }
+    hashTable[key].num++;
+}
+ void FreeHashTable(HashTable* hashTable) {
+    for (int i = 0; i < HASHLEN; i++) {
+        if (hashTable[i].data != NULL) {
+            free(hashTable[i].data);
+        }
+    }
+    free(hashTable);
+ }
+ int main(void) {
+    srand((unsigned)time(NULL));
+    int array[ARRAYLEN];
+    for (int i = 0; i < ARRAYLEN; i++) {
+        array[i] = rand() % 100;
+        printf("%d, ", array[i]);
+    }
+    printf("\n\n");
+    HashTable* hashTable = (HashTable*)malloc(sizeof(HashTable) * HASHLEN);
+    for (int i = 0; i < HASHLEN; i++) {
+        hashTable[i].data = NULL;
+        hashTable[i].num = 0;
+    }
+    for (int i = 0; i < ARRAYLEN; i++) {
+        SaveAtHashTable(hashTable, array[i]);
+    }
+    for (int i = 0; i < HASHLEN; i++) {
+        printf("hashTable[%d] : ", i);
+        for (int j = 0; j < hashTable[i].num; j++) {
+            printf("%d, ", hashTable[i].data[j]);
+        }
+        printf("\n");
+    }
+    FreeHashTable(hashTable);
+return 0;
+ }
