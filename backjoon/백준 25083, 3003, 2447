@@ -1,0 +1,59 @@
+#include <stdio.h>
+
+int main() {
+
+    printf("         ,r'\"7 \n");
+    printf("r`-_   ,'  ,/ \n");
+    printf(" \\. \". L_r' \n");
+    printf("   `~\\/ \n");
+    printf("      | \n");
+    printf("      | \n");
+
+
+    return 0;
+}
+
+#include <stdio.h>
+
+int main() {
+
+    int arr[7] = { 1, 1, 2, 2, 2, 8 };
+    int a;
+
+    for (int i = 0; i < 6; i++) {
+        scanf("%d", &a);
+        printf("%d ", arr[i] - a);
+    }
+
+    return 0;
+}
+
+#include <stdio.h>
+
+void star_re(int row, int column, int N){
+    if(N == 0) {
+        printf("*");
+        return;
+    }
+
+    if((row / N) % 3 == 1 && (column / N) % 3 == 1)
+        printf(" ");
+    else
+        star_re(row, column, N / 3);
+}
+
+int main()
+{
+    int N;
+
+    scanf("%d", &N);
+
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < N; j++){
+            star_re(j, i, N);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
